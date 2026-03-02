@@ -8,9 +8,8 @@ public class matchMakerTests {
 
 
     //check if a matchmaker can remove 5 People from the same prio queue
-    //TODO
     @Test
-    public void testMMSamePrio(){
+    public void testMMSamePrio() {
         {
             Person Sam = new Person(1001, 1);
             Person Johanna = new Person(1002, 1);
@@ -23,8 +22,59 @@ public class matchMakerTests {
             q.addPerson(Aram);
             q.addPerson(Anastasia);
             q.addPerson(JohnDoe);
+            System.out.println(q.toString());
+            MatchMaker m = new MatchMaker(q);
+            assertEquals(0, q.getNbrPeopleInQueue(1));
         }
 
 
     }
+
+    @Test
+    public void testMM5Same2() {
+        {
+            Queue q = new Queue();
+            //prio 1
+            q.addPerson(new Person(1001, 1));
+            q.addPerson(new Person(1002, 1));
+            q.addPerson(new Person(1003, 1));
+            q.addPerson(new Person(1004, 1));
+            q.addPerson(new Person(1005, 1));
+            //prio 2
+            q.addPerson(new Person(1011, 3));
+            q.addPerson(new Person(1012, 3));
+            q.addPerson(new Person(1013, 3));
+            q.addPerson(new Person(1014, 3));
+            q.addPerson(new Person(1015, 3));
+            System.out.println(q.toString());
+            MatchMaker m = new MatchMaker(q);
+            System.out.println(q.toString());
+            assertEquals(0, q.getNbrPeopleInQueue(1) + q.getNbrPeopleInQueue(3));
+        }
+    }
+
+    @Test
+    public void testMM4Same1Different1SecTimeWaited() throws InterruptedException {
+        {
+            Queue q = new Queue();
+            //prio 1
+            Person Sam = new Person(1001, 1);
+            q.addPerson(Sam);
+            q.addPerson(new Person(1002, 1));
+            q.addPerson(new Person(1003, 1));
+            q.addPerson(new Person(1004, 1));
+            //prio 2
+            q.addPerson(new Person(1005, 2));
+
+            Thread.sleep(1000);
+
+            System.out.println(q.getTimeWaited(Sam));
+            System.out.println(q.toString());
+            MatchMaker m = new MatchMaker(q);
+            System.out.println(q.toString());
+            assertEquals(0, q.getNbrPeopleInQueue(1) + q.getNbrPeopleInQueue(2));
+        }
+    }
+
+
 }

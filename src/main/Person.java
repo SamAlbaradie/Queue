@@ -3,7 +3,7 @@ package main;
 public class Person {
     int id;
     int prio;
-    int timeWaited; //TODO
+    long timeWaited;
 
     public Person(int id, int prio){
         this.id = id;
