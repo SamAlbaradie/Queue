@@ -10,10 +10,14 @@ public class MatchMaker  {
 
 
     public MatchMaker(Queue q){
-        while(q.getNbrPeopleInQueue() != 0){
+        int count = 0;
+        while(q.getNbrPeopleInQueue() != 0 && count != 3){
+
             for(int i = 1; i < 6; i++){
                 matchMake(q, i);
             }
+            count++;
+
         }
 
     }
@@ -45,11 +49,16 @@ public class MatchMaker  {
     }
 
     private void matchMakeDecided(Queue q, int prio, int qDiffUp, int qDiffDown, int time, int samePrioR, int diffPrioR){
+        //if the person with the longest waitTime has waited long enough
         if(q.getTimeWaited(q.getPeopleInQueue(prio).peek()) > time){
-            if(q.getNbrPeopleInQueue(qDiffDown) > 0 && qDiffDown != prio){
+            //if there are people who are waiting n-1 prio
+            if(q.getNbrPeopleInQueue(qDiffDown) == diffPrioR && qDiffDown != prio){
+                //remove correct nr of people in the original prio and the n-1 prio
                 q.removePeopleSameQueue(qDiffDown, diffPrioR);
                 q.removePeopleSameQueue(prio, samePrioR);
-            } else if (q.getNbrPeopleInQueue(qDiffUp) > 0 && qDiffUp != prio) {
+                //if there are people who are waiting n+1 prio
+            } else if (q.getNbrPeopleInQueue(qDiffUp) == diffPrioR && qDiffUp != prio) {
+                //remove correct nr of people in the original prio and the n+1 prio
                 q.removePeopleSameQueue(qDiffUp, diffPrioR);
                 q.removePeopleSameQueue(prio, samePrioR);
             }
