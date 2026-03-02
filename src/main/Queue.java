@@ -50,7 +50,7 @@ public class Queue {
         return null;
     }
 
-    //returns all the people objects in this priority queue as a priorityQueue
+    //returns all the people objects in this prio as a priorityQueue
     public PriorityQueue<Person> getPeopleInQueue(int prio){
         return q.get(prio);
     }
